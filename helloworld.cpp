@@ -2,6 +2,31 @@
 
 using namespace std;
 
+int money;
+
+int handleMoney(){
+    int option;
+    while(true){
+        system("CLS");
+        cout << "What do you want to do? (1: Load money 2: Take money 3: Go Back To Main Menu)"<<endl;
+        cin.clear();
+        cin >> option;
+        switch(option){
+            case(1):
+                break;
+            case(2):
+                break;
+            case(3):
+                return 0;
+                break;
+            default:
+                break;
+        }
+    }
+    return 0;
+}
+
+
 int main(){
     string anwser;
     int option;
@@ -19,12 +44,19 @@ int main(){
     }
     while(true){
         system("CLS");
-        cout << "What do you want to do?"<<endl;
+        cout << "What do you want to do? (1: Handle Money 2: Play 3: Exit)"<<endl;
         cin.clear();
         cin >> option;
         switch(option){
             case(1):
                 cout << "Oki!";
+                handleMoney();
+                break;
+            case(2):
+                break;
+            case(3):
+                cout << "Bye Bye!";
+                return 0;
                 break;
             default:
                 break;
@@ -32,3 +64,4 @@ int main(){
     }
     return 0;
 }
+
