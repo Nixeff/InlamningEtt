@@ -10,15 +10,32 @@ int loadMoney(){
     cout << "How much do you want to load? (Not over $5000)" <<endl;
     cin.clear();
     cin >> amount;
-    if((amount+money)<=5000){
+    if((amount+money)<=5000 && amount > 0){
         money=money+amount;
         cout << "Your new balance is: $"<<money<<endl;
     } else{
-        cout << "That is too much money!";
+        cout << "You cant add $"<< amount << " to your account!";
     }
     system("pause");
     return 0;
 }
+
+int takeMoney(){
+    int amount;
+    cout << "How much do you want to take out?" <<endl;
+    cin.clear();
+    cin >> amount;
+    if(amount<=money && amount > 0){
+        money=money-amount;
+        cout << "Your new balance is: $"<<money<<endl;
+    } else{
+        cout << "You cant take money you dont have!";
+    }
+    system("pause");
+    return 0;
+}
+
+
 
 int handleMoney(){
     int option;
@@ -32,11 +49,13 @@ int handleMoney(){
                 loadMoney();
                 break;
             case(2):
+                takeMoney();
                 break;
             case(3):
                 return 0;
                 break;
             default:
+                cout << "Not a valid input"<<endl;
                 break;
         }
     }
@@ -44,7 +63,13 @@ int handleMoney(){
 }
 
 int play(){
-    
+    system("CLS");
+    int amount;
+    cout << "How much do you want to bet? (Write '0' to exit to main menu)"<< endl;
+    cin >> amount;
+    if(amount == 0){
+
+    }
     return 0;
 }
 
@@ -54,17 +79,22 @@ int main(){
     int option;
 
     system("CLS");
-    cout << "Are you over the age of 18?";
-    cin >> anwser;
 
-    if (anwser== "y"){
-        cout << "Awesome! Lets gamble";
-    } else if (anwser == "n"){
-        cout << "You have to be over the age of 18 to gamble kid!";
-        return 0;
-    } else {
-        cout << "That is not a valid anwser";
+    while(true){
+        cout << "Are you over the age of 18?"<< endl;
+        cin >> anwser;
+
+        if (anwser== "y"){
+            cout << "Awesome! Lets gamble";
+            break;
+        } else if (anwser == "n"){
+            cout << "You have to be over the age of 18 to gamble kid!";
+            return 0;
+        } else {
+            cout << "That is not a valid anwser"<< endl;
+        }
     }
+
     while(true){
         system("CLS");
         cout << "Your Balance: $" << money << endl << "What do you want to do? (1: Handle Money 2: Play 3: Exit)"<<endl;
@@ -76,6 +106,7 @@ int main(){
                 handleMoney();
                 break;
             case(2):
+                play();
                 break;
             case(3):
                 cout << "Bye Bye!";
