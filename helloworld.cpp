@@ -3,16 +3,20 @@
 using namespace std;
 
 int money = 0;
+char dummy;
 
 int loadMoney(){
     int amount;
     cout << "How much do you want to load? (Not over $5000)" <<endl;
+    cin.clear();
     cin >> amount;
     if((amount+money)<=5000){
         money=money+amount;
+        cout << "Your new balance is: $"<<money<<endl;
     } else{
         cout << "That is too much money!";
     }
+    system("pause");
     return 0;
 }
 
