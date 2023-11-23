@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ctime>;
+#include <ctime>
 
 using namespace std;
 
@@ -115,18 +115,22 @@ int handleMoney(){
     return 0;
 }
 
-int rollDie(){
+void getDiceSeed(){
     srand(time(0));
+}
+
+int rollDie(){
     return rand() % 6 + 1;
 }
 
-int amount;
-int playerDie;
-int computerDie;
-int playerScore;
-int computerScore;
+
 
 int play(){
+    int amount;
+    int playerDice[2] = {1,1};
+    int computerDice[2] = {1,1};;
+    int playerScore;
+    int computerScore;
     playing = true;
     while(playing){
         system("CLS");
@@ -138,18 +142,22 @@ int play(){
             playing = false;
             break;
         } else if(amount > 0){
-            playerDie=rollDie();
-            computerDie=rollDie();
-            cout << "You rolled : " << playerDie << " ,The Computer rolled : " << computerDie << endl;
-            if (playerDie>computerDie){
+            getDiceSeed();
+            playerDice[0]=rollDie();
+            playerDice[1]=rollDie();
+            computerDice[0]=rollDie();
+            computerDice[1]=rollDie();
+            cout << "You rolled : " << playerDice[0] << " + "<<playerDice[1]<<" ,The Computer rolled : " << computerDice[0] << " + "<<computerDice[1]<<endl;
+            /*if (playerDie>computerDie){
                 playerScore++;
                 cout << "You won this round! You have "<<playerScore<<" Points! And The computer has "<<computerScore<<" Points!" <<endl;
             } else if (computerDie>playerDie){
                 playerScore++;
                 cout << "The computer won this round! You have "<<playerScore<<" Points! And The computer has "<<computerScore<<" Points!" <<endl;
             } else {
-                cout 
-            }
+                
+            }*/
+            system("pause");
         }
 
     }
