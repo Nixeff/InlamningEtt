@@ -168,6 +168,7 @@ int play(){
                 cout << "That was not a valid input!";
                 break;
         }
+        system("pause");
     }
     money-=bet;
     while(playing){
