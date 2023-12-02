@@ -3,52 +3,41 @@
 
 using namespace std;
 
-int money = 0;
-int winnings = 0;
 
+int money = 0;          //Hur mycket pengar du har 
+int winnings = 0;       //Hur mycket pengar du har kännat/förlorat
+bool running = true;    //Används för att se om programmet ska köras
+bool playing;
+
+//Definerar mina funktioner 
+void areYouOfAge();
 int loadMoney();
 int takeMoney();
 int handleMoney();
 int play();
+int howMuchDoYouWantToBet();
 int rollDie();
 
+
 int main(){
-    string anwser;
-    int option;
-
-    system("CLS");
-
-    while(true){
-        cout << "Are you over the age of 18?(y/n)"<< endl;
-        cin >> anwser;
-
-        if (anwser== "y"){
-            cout << "Awesome! Lets gamble";
-            break;
-        } else if (anwser == "n"){
-            cout << "You have to be over the age of 18 to gamble kid!";
-            return 0;
-        } else {
-            cout << "That is not a valid anwser"<< endl;
-        }
-    }
-
-    while(true){
+    system("CLS");      //Varje gång system("CLS") körs är det för att cleara terminalen för att skapa effekten av att det inte är en massa nya rader som skrivs
+    areYouOfAge();      
+    while(running){
         system("CLS");
+        char option;
         cout << "Your Balance: " << money<<"kr" << endl << "What do you want to do? (1: Handle Money 2: Play 3: Exit)"<<endl;
         cin.clear();
-        cin >> option;
+        cin >> option;  
         switch(option){
-            case(1):
-                cout << "Oki!";
+            case('1'):
                 handleMoney();
                 break;
-            case(2):
+            case('2'):
                 play();
                 break;
-            case(3):
+            case('3'):
                 cout << "Bye Bye!";
-                return 0;
+                running = false;
                 break;
             default:
                 break;
@@ -57,6 +46,36 @@ int main(){
     return 0;
 }
 
+
+/*  areYouOfAge
+    Frågar om du är över 18 om inte så kommer den att sätta running till falskt vilket betyder att spelet inte kommer starta. Om du är över 18
+    så kommer den att inte göra någonting.
+
+    Ger inte ut ett svar
+*/
+void areYouOfAge(){
+    while(true){
+        char anwser;
+        cout << "Are you over the age of 18?(y/n)"<< endl;
+        cin >> anwser;
+        if (anwser== 'y'){
+            cout << "Awesome! Lets gamble";
+            break;
+        } else if (anwser == 'n'){
+            cout << "You have to be over the age of 18 to gamble kid!";
+            running = false;
+            break;
+        } else {
+            cout << "That is not a valid anwser"<< endl;
+        }
+    }
+}
+
+/*  loadMoney 
+    Låter användaren ge en input(integer) som ska vara emmellan 1-5000 och "laddar" det till kontot
+
+    Ger alltid ut 0 som svar
+*/
 int loadMoney(){
     int amount;
     cout << "How much do you want to load? (Not over 5000kr)" <<endl;
@@ -72,6 +91,12 @@ int loadMoney(){
     return 0;
 }
 
+/*  takeMoney
+    Låter användaren ge en input(integer) som ska vara emmellan 1-hur mycket pengar som finns på kontot.
+    Sen så tar den bort de pengarna ifrån kontot
+
+    Ger alltid ut 0 som svar
+*/
 int takeMoney(){
     int amount;
     cout << "How much do you want to take out?" <<endl;
@@ -87,21 +112,25 @@ int takeMoney(){
     return 0;
 }
 
+/*  handleMoney
+    Tar användaren till en meny där de kan välja vilken pengar funktion de vill använda eller om de vill gå till baka till huvudmenyn(Se main)
+    
+    Ger alltid ut 0 som savar*/
 int handleMoney(){
-    int option;
     while(true){
+        char option;
         system("CLS");
         cout << "You have: "<< money << "kr"<<endl << "What do you want to do? (1: Load money 2: Take money 3: Go Back To Main Menu)"<<endl;
         cin.clear();
         cin >> option;
         switch(option){
-            case(1):
+            case('1'):
                 loadMoney();
                 break;
-            case(2):
+            case('2'):
                 takeMoney();
                 break;
-            case(3):
+            case('3'):
                 return 0;
                 break;
             default:
@@ -111,55 +140,59 @@ int handleMoney(){
     }
     return 0;
 }
-
+/*  getDiceSeed
+    Skapar ett typ av lista med "slump" tal med hjälp av den totala tiden ifrån idag till 1970/1/1
+    
+    Ger alldrig ut något svar
+*/
 void getDiceSeed(){
     srand(time(0));
 }
 
+/*  rollDie
+    Slumpar ett tal emmelan 1-6
+    
+    Ger ut ett slump tal emmelan 1-6(integer)
+*/
 int rollDie(){
     return rand() % 6 + 1;
 }
 
-int play(){
-    int option;
-    int bet;
-    int playerDice[2] = {1,1};
-    int computerDice[2] = {1,1};;
-    int playerResult;
-    int computerResult;
-    int playerScore = 0;
-    int computerScore = 0;
-    bool playing = true;
-    bool betting = true;
-    while(betting){
+/*  howMuchDoYouWantToBet
+    Låter spelaren välja hur mycket de vill satsa
+    
+    retunerar anntingen 0,100,300,500(integer)*/
+int howMuchDoYouWantToBet(){
+    while(true){
+        char option;
         system("CLS");
-        cout << "You have: "<< money << "kr"<<endl << "How much do you want to bet? (1: 100 2: 200 3: 500 0: exit to main menu)"<< endl;
+        cout << "You have: "<< money << "kr"<<endl << "How much do you want to bet? (1: 100 2: 300 3: 500 0: exit to main menu)"<< endl;
         cin >> option;
         switch(option) {
-            case 0:
-                betting = false;
+            case '0':
                 playing = false;
+                return 0;
                 break;
-            case 1:
+            case '1':
                 if(money>=100){
-                    betting = false;
-                    bet = 100;
+                    money-=100;
+                    return 100;
                 }else{
                     cout<<"You don't have that much money!"<<endl;
                 }
                 break;
-            case 2:
-                if(money>=200){
-                    betting = false;
-                    bet = 200;
+            case '2':
+                if(money>=300){
+                    money-=300;
+                    return 300;
                 }else{
                     cout<<"You don't have that much money!"<<endl;
                 }
                 break;
-            case 3:
+            case '3':
                 if(money>=500){
-                    betting = false;
-                    bet = 500;
+                    money-=500;
+                    return 500;
                 }else{
                     cout<<"You don't have that much money!"<<endl;
                 }
@@ -170,7 +203,25 @@ int play(){
         }
         system("pause");
     }
-    money-=bet;
+}
+
+/*  play
+    Här är själva spelet. Det börjar med att använda howMuchDoYouWantToBet() för att få reda på hur mycket spelaren vill satsa.
+    Sedan börjar spelet (Om spelaren hade pengar att satsa). Först rullas tärningarna sedan gemförs summorna och om någon får mer
+    vinner dem och om de blir lika spelas omgången om tills det att någon fått 2 vinnster. 
+    
+    returnerar alltid 0
+*/
+int play(){
+    int bet;
+    int playerDice[2] = {1,1};
+    int computerDice[2] = {1,1};
+    int playerResult;
+    int computerResult;
+    int playerScore = 0;
+    int computerScore = 0;
+    playing = true;
+    bet = howMuchDoYouWantToBet();
     while(playing){
         system("CLS");
         if(playing){
@@ -204,8 +255,7 @@ int play(){
             }
             system("pause");
         }
-
     }
-    
     return 0;
 }
+
